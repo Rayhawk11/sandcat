@@ -54,14 +54,14 @@ func (g GIST) GetBeaconBytes(profile map[string]interface{}) []byte {
 }
 
 //GetPayloadBytes load payload bytes from github
-func (g GIST) GetPayloadBytes(profile map[string]interface{}, payloadName string) ([]byte, string) {
+func (g GIST) GetPayloadBytes(profile map[string]interface{}, payloadName string, link_id string) ([]byte, string) {
 	var payloadBytes []byte
 	var err error
 	if _, ok := profile["paw"]; !ok {
 		output.VerbosePrint("[!] Error obtaining payload - profile missing paw.")
 		return nil, ""
 	}
-	payloads := getGists("payloads", fmt.Sprintf("%s-%s", profile["paw"].(string), payloadName))
+	payloads := getGists("payloads", fmt.Sprintf("%s-%s-%s", profile["paw"].(string), link_id, payloadName))
 	if payloads[0] != "" {
 		payloadBytes, err = base64.StdEncoding.DecodeString(payloads[0])
 		if err != nil {
