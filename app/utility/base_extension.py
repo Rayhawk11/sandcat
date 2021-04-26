@@ -21,6 +21,7 @@ class Extension(ABC):
         """
         for d in self.dependencies:
             dep_result = subprocess.run('go list "{}"'.format(d), shell=True,
+                                        cwd='./plugins/sandcat/gocat',
                                         stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
             if (dep_result.stdout.decode()).strip() != d:
                 return False
